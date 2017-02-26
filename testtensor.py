@@ -1,4 +1,32 @@
-# import tensorflow as tf;
+import tensorflow as tf;
+import calculation as ca;
+
+from flask import *
+import pandas as pd
+
+app = Flask(__name__)
+
+dummy_data = {
+    0: pd.DataFrame({'name':['A', 'B', 'C', 'D'], 'value':[4, 2, 8, 5]}),
+    1: pd.DataFrame({'name':['A', 'B', 'C'], 'value':[13, 29, 9]}),
+    2: pd.DataFrame({'name':['A', 'B', 'C','D', 'E', 'F'], 'value':[3, 12, 9, 21, 15, 7]})
+    }
+
+@app.route('/')
+def index():
+    return make_response(open('index.html').read())
+
+
+@app.route('/api/<int:id>')
+def api(id):
+    return make_response(dummy_data[id].to_json(orient='records'))
+
+
+if __name__ == '__main__':
+    app.run(debug = True)
+
+
+
 #
 # matrix1 = tf.constant([[3., 3.]]);
 # matrix2 = tf.constant([[2.],[2.]]);
@@ -70,59 +98,59 @@
 # # print(sess.run([W, b]))
 # #
 # #
-# # # Model parameters
-# # W = tf.Variable([.3], tf.float32)
-# # b = tf.Variable([-.3], tf.float32)
-# # # Model input and output
-# # x = tf.placeholder(tf.float32)
-# # linear_model = W * x + b
-# # y = tf.placeholder(tf.float32)
-# # # loss
-# # loss = tf.reduce_sum(tf.square(linear_model - y)) # sum of the squares
-# # # optimizer
-# # optimizer = tf.train.GradientDescentOptimizer(0.01)
-# # train = optimizer.minimize(loss)
-# # # training data
-# # x_train = [1,2,3,4]
-# # y_train = [0,-1,-2,-3]
-# # # training loop
-# # init = tf.global_variables_initializer()
-# # sess.run(init) # reset values to wrong
-# # for i in range(1000):
-# #   sess.run(train, {x:x_train, y:y_train})
-# # # evaluate training accuracy
-# # curr_W, curr_b, curr_loss  = sess.run([W, b, loss], {x:x_train, y:y_train})
-# # print("W: %s b: %s loss: %s"%(curr_W, curr_b, curr_loss))
-#
-import numpy as np
-import tensorflow as tf
-# Declare list of features, we only have one real-valued feature
-features = [tf.contrib.layers.real_valued_column("", dimension=1)]
-def model(features, labels, mode, params):
-  with tf.device("/cpu:0"):
-    # Build a linear model and predict values
-    W = tf.get_variable("W", [1], dtype=tf.float64)
-    b = tf.get_variable("b", [1], dtype=tf.float64)
-    y = W*features[:,0] + b
-    # Loss sub-graph
-    loss = tf.reduce_sum(tf.square(y - labels))
-    # Training sub-graph
-    global_step = tf.train.get_global_step()
-    optimizer = tf.train.GradientDescentOptimizer(0.01)
-    train = tf.group(optimizer.minimize(loss),
-                     tf.assign_add(global_step, 1))
-    # ModelFnOps connects subgraphs we built to the
-    # appropriate functionality.
-    return tf.contrib.learn.estimators.model_fn.ModelFnOps(
-        mode=mode, predictions=y,
-        loss= loss,
-        train_op=train)
-estimator = tf.contrib.learn.Estimator(model_fn=model)
-# define our data set
-dataSet = tf.contrib.learn.datasets.base.Dataset(
-   data=np.array([[1.],[2.],[3.],[4.]]),
-   target=np.array([[0.],[-1.],[-2.],[-3.]]))
-# train
-estimator.fit(x=dataSet.data, y=dataSet.target, steps=1000)
-# evaluate our model
-print(estimator.evaluate(x=dataSet.data, y=dataSet.target, steps=10))
+# Model parameters
+# W = tf.Variable([.3], tf.float32)
+# b = tf.Variable([-.3], tf.float32)
+# # Model input and output
+# x = tf.placeholder(tf.float32)
+# linear_model = W * x + b
+# y = tf.placeholder(tf.float32)
+# # loss
+# loss = tf.reduce_sum(tf.square(linear_model - y)) # sum of the squares
+# # optimizer
+# optimizer = tf.train.GradientDescentOptimizer(0.01)
+# train = optimizer.minimize(loss)
+# # training data
+# x_train = [1,2,3,4]
+# y_train = [0,-1,-2,-3]
+# # training loop
+# init = tf.global_variables_initializer()
+# sess.run(init) # reset values to wrong
+# for i in range(1000):
+#   sess.run(train, {x:x_train, y:y_train})
+# # evaluate training accuracy
+# curr_W, curr_b, curr_loss  = sess.run([W, b, loss], {x:x_train, y:y_train})
+# print("W: %s b: %s loss: %s"%(curr_W, curr_b, curr_loss))
+
+# import numpy as np
+# import tensorflow as tf
+# # Declare list of features, we only have one real-valued feature
+# features = [tf.contrib.layers.real_valued_column("", dimension=1)]
+# def model(features, labels, mode, params):
+#   with tf.device("/cpu:0"):
+#     # Build a linear model and predict values
+#     W = tf.get_variable("W", [1], dtype=tf.float64)
+#     b = tf.get_variable("b", [1], dtype=tf.float64)
+#     y = W*features[:,0] + b
+#     # Loss sub-graph
+#     loss = tf.reduce_sum(tf.square(y - labels))
+#     # Training sub-graph
+#     global_step = tf.train.get_global_step()
+#     optimizer = tf.train.GradientDescentOptimizer(0.01)
+#     train = tf.group(optimizer.minimize(loss),
+#                      tf.assign_add(global_step, 1))
+#     # ModelFnOps connects subgraphs we built to the
+#     # appropriate functionality.
+#     return tf.contrib.learn.estimators.model_fn.ModelFnOps(
+#         mode=mode, predictions=y,
+#         loss= loss,
+#         train_op=train)
+# estimator = tf.contrib.learn.Estimator(model_fn=model)
+# # define our data set
+# dataSet = tf.contrib.learn.datasets.base.Dataset(
+#    data=np.array([[1.],[2.],[3.],[4.]]),
+#    target=np.array([[0.],[-1.],[-2.],[-3.]]))
+# # train
+# estimator.fit(x=dataSet.data, y=dataSet.target, steps=1000)
+# # evaluate our model
+# print(estimator.evaluate(x=dataSet.data, y=dataSet.target, steps=10))

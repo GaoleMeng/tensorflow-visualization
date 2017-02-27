@@ -1,7 +1,4 @@
 import json
 
-data = {
-    'x':{'x':1, 'y':5, 'z':10}
-}
-
-data = json.loads(json_str)
+data = [{'title':'Hello World!', 'body':"Your big, blue, roundness impresses us all."}]
+json.dump(data, open('data/data.json', 'w'))

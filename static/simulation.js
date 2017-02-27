@@ -14,8 +14,10 @@ var precolor;
 
 
 
-
 init();
+
+
+
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 //scene.add( cube );

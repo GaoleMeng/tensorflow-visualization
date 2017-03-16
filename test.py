@@ -4,13 +4,16 @@ import json;
 
 x_data = np.random.rand(1000).astype(np.float32);
 y_data = x_data*0.1 + 0.3;
+z_data = np.zeros(1000).astype(np.float32);
 
 data = {};
 
-for i in range(100):
-    data[i] = {'x': x_data[i].item(), 'y': y_data[i].item()};
+for i in range(1000):
+    data[i] = {'x': x_data[i].item(), 'y': y_data[i].item(), 'z': z_data[i].item()};
 
-json.dump(data, open('data/data.json', 'w'));
+json.dump(data, open('static/data.json', 'w'));
+
+
 
 
 #print(json.dumps(x_data.tolist(), open('data/data.json', 'w')));

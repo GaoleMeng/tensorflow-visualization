@@ -13,11 +13,11 @@ var raycaster;
 var precolor;
 var theaxis;
 
-  console.log("getthis");
+var curTxt=document.createElement('div');
+document.body.appendChild(curTxt);
 
 $.getJSON('/static/data.json',function(data){
 
-  console.log("getthis");
       
    init();
    renderer.setSize( window.innerWidth, window.innerHeight );
@@ -30,8 +30,12 @@ $.getJSON('/static/data.json',function(data){
    renderer.setClearColor( 0xffffff );
    var stats = new Stats();
    container.appendChild( stats.dom );
+
+
    render();
    window.addEventListener('resize' , onWindowResize , false);
+
+
 
 
    function init(){
@@ -55,7 +59,9 @@ $.getJSON('/static/data.json',function(data){
    controls.panSpeed = 0.8;
    controls.noZoom = false;
    controls.noPan = false;
-   controls.minDistance = 1;
+
+   controls.minDistance = 2;
+
    controls.staticMoving = true;
    controls.dynamicDampingFactor = 0.3;
    scene.add( new THREE.AmbientLight( 0x555555 ) );
@@ -70,7 +76,7 @@ $.getJSON('/static/data.json',function(data){
    //var geo = new THREE.SphereGeometry(1, 1, 1);
 
    //circle = new THREE.Mesh( geo, material);
-   var radius = 0.1, segemnt = 10, rings = 10;
+   var radius = 0.04, segemnt = 10, rings = 10;
 
     var sphereMaterial = new THREE.MeshLambertMaterial({ color: 0xCC0000 });
     var material = new THREE.MeshBasicMaterial({ color: 0x0030ff, opacity: 0.5, transparent: true} );
@@ -88,29 +94,28 @@ $.getJSON('/static/data.json',function(data){
     let ybar=0;
     let zbar=0;
 
-    for (let i = 0; i < 1000; i++){
+    for (let i = 0; i < 5000; i++){
       xbar+=data[i].x;
       ybar+=data[i].y;
       zbar+=data[i].z;
     }
-    xbar/=1000;
-    ybar/=1000;
-    zbar/=1000;
+    xbar/=5000;
+    ybar/=5000;
+    zbar/=5000;
+    
 
-
-    for (let i = 0; i < 1000 ; i++){
-      console.log("larger" + data[i].x)
+    for (let i = 0; i < 5000 ; i++){
 
       var object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0x0030ff, opacity: 0.5, transparent: true} ) )
 
-
       var position = new THREE.Vector3();
 
-      position.x = (data[i].x-xbar)    //Math.random() * 10 - 5;
-      position.y = (data[i].y-ybar)   //Math.random() * 6 - 3;
-      position.z = (data[i].z-zbar)    //Math.random() * 8 - 4;
+      position.x = (data[i].x-xbar)/1.5    //Math.random() * 10 - 5;
+      position.y = (data[i].y-ybar)/1.5   //Math.random() * 6 - 3;
+      position.z = (data[i].z-zbar)/1.5    //Math.random() * 8 - 4;
 
       object.position.set( position.x, position.y, position.z );
+      object.num = i;
       scene.add(object);
     //matrix.setPosition( position.x, position.y, positon.y);
     //conbineGeo.merge(sphereGeo, matrix);
@@ -133,11 +138,24 @@ $.getJSON('/static/data.json',function(data){
 
 
 
+
    function render() {
+
 
     requestAnimationFrame( render );
     controls.update();
     raycaster.setFromCamera( mouse, camera );
+    //curTxt.innerHTML="";
+
+    document.body.onmousemove=moveCursor;
+    curTxt.id="cursorText";
+    
+    var curTxtLen=[curTxt.offsetWidth,curTxt.offsetHeight];
+    function moveCursor(e){
+        if(!e){e=window.event;}
+        curTxt.style.left=e.clientX-curTxtLen[0]+'px';
+        curTxt.style.top=e.clientY-curTxtLen[1]+'px';
+    }
 
 
    var intersects = raycaster.intersectObjects( scene.children );
@@ -147,17 +165,24 @@ $.getJSON('/static/data.json',function(data){
     if ( INTERSECTED != intersects[ 0 ].object ) {
 
       if ( INTERSECTED ){
+        curTxt.innerHTML=""
         INTERSECTED.material.color.set( precolor  );
       }
       INTERSECTED = intersects[ 0 ].object;
       precolor = INTERSECTED.material.color.getHex();
       INTERSECTED.material.color.set( 0xff0000 );
+      if (intersects[ 0 ].object.hasOwnProperty("num")   ){
+        curTxt.innerHTML=data[ intersects[ 0 ].object.num ].label;
+      }
     }
 
    } else {
 
-    if ( INTERSECTED ) INTERSECTED.material.color.set( precolor );
-
+    if ( INTERSECTED ){
+      INTERSECTED.material.color.set( precolor );
+      curTxt.innerHTML=""
+    }
+    
     INTERSECTED = null;
 
    }

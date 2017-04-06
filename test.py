@@ -6,10 +6,13 @@ x_data = np.random.rand(1000).astype(np.float32);
 y_data = x_data*0.1 + 0.3;
 z_data = np.zeros(1000).astype(np.float32);
 
+
 data = {};
 
-for i in range(1000):
-    data[i] = {'x': x_data[i].item(), 'y': y_data[i].item(), 'z': z_data[i].item()};
+for i, line in enumerate(open("out.txt")):
+	vec = line.strip().split(" ");
+	if i != 0:
+		data[i-1] = {'x': float(vec[0]), 'y': float(vec[1]), 'z': float(vec[2])}
 
 json.dump(data, open('static/data.json', 'w'));
 

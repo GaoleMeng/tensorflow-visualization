@@ -13,7 +13,11 @@ var raycaster;
 var precolor;
 var theaxis;
 
+  console.log("getthis");
+
 $.getJSON('/static/data.json',function(data){
+
+  console.log("getthis");
       
    init();
    renderer.setSize( window.innerWidth, window.innerHeight );
@@ -51,7 +55,7 @@ $.getJSON('/static/data.json',function(data){
    controls.panSpeed = 0.8;
    controls.noZoom = false;
    controls.noPan = false;
-   controls.minDistance = 10;
+   controls.minDistance = 1;
    controls.staticMoving = true;
    controls.dynamicDampingFactor = 0.3;
    scene.add( new THREE.AmbientLight( 0x555555 ) );
@@ -80,23 +84,34 @@ $.getJSON('/static/data.json',function(data){
     //      );
 
     var sphereGeo = new THREE.SphereGeometry(radius,segemnt,rings);
+    let xbar=0;
+    let ybar=0;
+    let zbar=0;
+
+    for (let i = 0; i < 1000; i++){
+      xbar+=data[i].x;
+      ybar+=data[i].y;
+      zbar+=data[i].z;
+    }
+    xbar/=1000;
+    ybar/=1000;
+    zbar/=1000;
 
 
-    for (let i = 0; i < 500 ; i++){
+    for (let i = 0; i < 1000 ; i++){
+      console.log("larger" + data[i].x)
 
       var object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0x0030ff, opacity: 0.5, transparent: true} ) )
 
 
       var position = new THREE.Vector3();
 
+      position.x = (data[i].x-xbar)    //Math.random() * 10 - 5;
+      position.y = (data[i].y-ybar)   //Math.random() * 6 - 3;
+      position.z = (data[i].z-zbar)    //Math.random() * 8 - 4;
 
-
-      position.x = data[i].x*10    //Math.random() * 10 - 5;
-      position.y = data[i].y*10+Math.random()*1   //Math.random() * 6 - 3;
-      position.z = data[i].z*10+Math.random()*1    //Math.random() * 8 - 4;
-
-    object.position.set( position.x, position.y, position.z );
-    scene.add(object);
+      object.position.set( position.x, position.y, position.z );
+      scene.add(object);
     //matrix.setPosition( position.x, position.y, positon.y);
     //conbineGeo.merge(sphereGeo, matrix);
 

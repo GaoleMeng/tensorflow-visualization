@@ -253,12 +253,19 @@ try:
   low_dim_embs = tsne.fit_transform(final_embeddings[:plot_only, :])
 
   thisfile = open("feeddata.txt","w")
-  thisfile.write("1000 128\n");
-  for i in range(1000):
+  labelfile = open("labelfile.txt", "w")
+  thisfile.write("5000 128\n");
+
+  for i in range(5000):
     for j in range(128):
       thisfile.write(str(final_embeddings[i,j]) + " ")
     thisfile.write("\n")
   thisfile.close();
+
+  for i in range(5000):
+    labelfile.write(reverse_dictionary[i])
+    labelfile.write("\n")
+
 
   labels = [reverse_dictionary[i] for i in xrange(plot_only)]
   plot_with_labels(low_dim_embs, labels)

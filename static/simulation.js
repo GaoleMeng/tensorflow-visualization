@@ -60,7 +60,7 @@ $.getJSON('/static/data.json',function(data){
    controls.noZoom = false;
    controls.noPan = false;
 
-   controls.minDistance = 2;
+   controls.minDistance = 0.1;
 
    controls.staticMoving = true;
    controls.dynamicDampingFactor = 0.3;

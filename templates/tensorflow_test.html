@@ -30,11 +30,27 @@
 				font-weight: bold;
 			    position:absolute;
 			}
+			#controlpanel{
+				z-index:100;
+			}
+			#container{
+				z-index: -1;
+			}
+
+
+
 		</style>
-	</head>
-	<body>
+		<link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
+   		<script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
+		</head>
+		<body>
+		
 		<div id="container"></div>
-		<script src="/static/lib/three.js"></script>
+		<!-- <div class="mui-panel" id="controlpanel">
+        	<h1>My Title</h1>
+        	<button class="mui-btn mui-btn--primary mui-btn--raised">My Button</button>
+      	</div>	 -->	
+      	<script src="/static/lib/three.js"></script>
 		<script src="/static/lib/TrackballControls.js"></script>
 		<script src="/static/lib/jquery-3.1.1.min.js"></script>
 		<script src="/static/lib/stats.min.js"></script>

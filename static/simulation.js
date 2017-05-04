@@ -16,33 +16,38 @@ var theaxis;
 var curTxt=document.createElement('div');
 document.body.appendChild(curTxt);
 
+
+
 $.getJSON('/static/data.json',function(data){
 
-      
    init();
    renderer.setSize( window.innerWidth, window.innerHeight );
-   document.body.appendChild( renderer.domElement );
+   document.getElementById("container").appendChild( renderer.domElement );
    //scene.add( cube );
    //scene.add( sphere );
    //scene.add( conbineMesh );
    //combineMesh.setColor(0x00ddaa);
    camera.position.z = 5;
    renderer.setClearColor( 0xffffff );
-   var stats = new Stats();
-   container.appendChild( stats.dom );
+  var stats = new Stats();
+  container.appendChild( stats.dom );
+  //  var newbutton = document.createElement('div');
+  //  document.body.appendChild(newbutton);
+  // newbutton.innerHTML="sdkusdhgfkusbfkusbfsbfdsbf,sdbfsfjksbfhlaijl";
+
 
 
    render();
    window.addEventListener('resize' , onWindowResize , false);
 
-
+   console.log(document.getElementById("container").offsetWidth);
 
 
    function init(){
 
 
    scene = new THREE.Scene();
-   camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
+   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
    //camera.position.z = 1000;
    var axes = new THREE.AxisHelper(1);
    scene.add(axes);
@@ -76,7 +81,7 @@ $.getJSON('/static/data.json',function(data){
    //var geo = new THREE.SphereGeometry(1, 1, 1);
 
    //circle = new THREE.Mesh( geo, material);
-   var radius = 0.04, segemnt = 10, rings = 10;
+   var radius = 0.03, segemnt = 10, rings = 10;
 
     var sphereMaterial = new THREE.MeshLambertMaterial({ color: 0xCC0000 });
     var material = new THREE.MeshBasicMaterial({ color: 0x0030ff, opacity: 0.5, transparent: true} );
@@ -94,27 +99,38 @@ $.getJSON('/static/data.json',function(data){
     let ybar=0;
     let zbar=0;
 
-    for (let i = 0; i < 5000; i++){
+    for (let i = 0; i < 1000; i++){
       xbar+=data[i].x;
       ybar+=data[i].y;
       zbar+=data[i].z;
     }
-    xbar/=5000;
-    ybar/=5000;
-    zbar/=5000;
+    xbar/=1000; 
+    ybar/=1000;
+    zbar/=1000;
     
 
-    for (let i = 0; i < 5000 ; i++){
+    for (let i = 0; i < 1000 ; i++){
+      var object;
+      if (i == 193 || i == 180){
+        object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0xff0030, opacity: 0.5, transparent: true} ) )
+      }
+      else{
+        object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0x0030ff, opacity: 0.5, transparent: true} ) )
+      }
 
-      var object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0x0030ff, opacity: 0.5, transparent: true} ) )
+
+      
 
       var position = new THREE.Vector3();
 
-      position.x = (data[i].x-xbar)/1.5    //Math.random() * 10 - 5;
-      position.y = (data[i].y-ybar)/1.5   //Math.random() * 6 - 3;
-      position.z = (data[i].z-zbar)/1.5    //Math.random() * 8 - 4;
+      position.x = (data[i].x-xbar)/3    //Math.random() * 10 - 5;
+      position.y = (data[i].y-ybar)/3   //Math.random() * 6 - 3;
+      position.z = (data[i].z-zbar)/3    //Math.random() * 8 - 4;
 
       object.position.set( position.x, position.y, position.z );
+      
+
+
       object.num = i;
       scene.add(object);
     //matrix.setPosition( position.x, position.y, positon.y);

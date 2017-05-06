@@ -59,7 +59,7 @@ $.getJSON('/static/data.json',function(data){
 
     // add the control
    controls = new THREE.TrackballControls( camera );
-   controls.rotateSpeed = 1.0;
+   controls.rotateSpeed = 1.5;
    controls.zoomSpeed = 1.2;
    controls.panSpeed = 0.8;
    controls.noZoom = false;
@@ -76,12 +76,15 @@ $.getJSON('/static/data.json',function(data){
     pointLight.position.y = 50;
     pointLight.position.z = 150;
 
+    // controls.enabled = false;
+
+
     scene.add( pointLight );
 
    //var geo = new THREE.SphereGeometry(1, 1, 1);
 
    //circle = new THREE.Mesh( geo, material);
-   var radius = 0.03, segemnt = 10, rings = 10;
+   var radius = 0.04, segemnt = 10, rings = 10;
 
     var sphereMaterial = new THREE.MeshLambertMaterial({ color: 0xCC0000 });
     var material = new THREE.MeshBasicMaterial({ color: 0x0030ff, opacity: 0.5, transparent: true} );
@@ -123,9 +126,9 @@ $.getJSON('/static/data.json',function(data){
 
       var position = new THREE.Vector3();
 
-      position.x = (data[i].x-xbar)/3    //Math.random() * 10 - 5;
-      position.y = (data[i].y-ybar)/3   //Math.random() * 6 - 3;
-      position.z = (data[i].z-zbar)/3    //Math.random() * 8 - 4;
+      position.x = (data[i].x-xbar)/2    //Math.random() * 10 - 5;
+      position.y = (data[i].y-ybar)/2   //Math.random() * 6 - 3;
+      position.z = (data[i].z-zbar)/2    //Math.random() * 8 - 4;
 
       object.position.set( position.x, position.y, position.z );
       

@@ -110,6 +110,7 @@ $.getJSON('/static/emoji_json.json',function(data){
       ybar+=parseFloat(data[i].y);
       zbar+=parseFloat(data[i].z);
       console.log(data[i].x + " " + i+ " "+xbar);
+      
     }
   
 

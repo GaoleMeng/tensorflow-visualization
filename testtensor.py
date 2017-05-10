@@ -10,6 +10,10 @@ app = Flask(__name__)
 def index():
     return make_response(open('templates/tensorflow_test.html').read())
 
+
+
+
+
 # @app.route('/api/<int:id>')
 # def api(id):
 #     return make_response(dummy_data[id].to_json(orient='records'))

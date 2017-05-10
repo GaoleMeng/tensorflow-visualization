@@ -28,6 +28,9 @@ $.getJSON('/static/data.json',function(data){
    //scene.add( conbineMesh );
    //combineMesh.setColor(0x00ddaa);
    camera.position.z = 5;
+   camera.position.x = 5
+    camera.position.y = 5
+
    renderer.setClearColor( 0xffffff );
   var stats = new Stats();
   container.appendChild( stats.dom );
@@ -113,16 +116,32 @@ $.getJSON('/static/data.json',function(data){
     
 
     for (let i = 0; i < 1000 ; i++){
-      var object;
-      if (i == 193 || i == 180){
-        object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0xff0030, opacity: 0.5, transparent: true} ) )
-      }
-      else{
-        object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0x0030ff, opacity: 0.5, transparent: true} ) )
-      }
+      // var object;
+      // if (i == 193 || i == 180){
+      //   object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0xff0030, opacity: 0.5, transparent: true} ) )
+      // }
+      // else{
+      //   object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0x0030ff, opacity: 0.5, transparent: true} ) )
+      // }
 
 
+      // var position = new THREE.Vector3();
+
+      // position.x = (data[i].x-xbar)/2    //Math.random() * 10 - 5;
+      // position.y = (data[i].y-ybar)/2   //Math.random() * 6 - 3;
+      // position.z = (data[i].z-zbar)/2    //Math.random() * 8 - 4;
+
+      // object.position.set( position.x, position.y, position.z );
       
+
+
+      // object.num = i;
+      // scene.add(object);
+
+      // try 2d image;
+      var map = new THREE.TextureLoader().load( "/static/Loudly-Crying-Emoji-PNG.png" );
+      var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true } );
+      var sprite = new THREE.Sprite( material );
 
       var position = new THREE.Vector3();
 
@@ -130,14 +149,13 @@ $.getJSON('/static/data.json',function(data){
       position.y = (data[i].y-ybar)/2   //Math.random() * 6 - 3;
       position.z = (data[i].z-zbar)/2    //Math.random() * 8 - 4;
 
-      object.position.set( position.x, position.y, position.z );
-      
+      sprite.scale.set(0.2,0.2,0.2)
+      sprite.position.set(position.x, position.y, position.z);
 
+      sprite.num = i;
 
-      object.num = i;
-      scene.add(object);
-    //matrix.setPosition( position.x, position.y, positon.y);
-    //conbineGeo.merge(sphereGeo, matrix);
+      scene.add( sprite );
+
 
     }
 

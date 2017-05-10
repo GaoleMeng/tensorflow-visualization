@@ -16,11 +16,12 @@ var theaxis;
 var curTxt=document.createElement('div');
 document.body.appendChild(curTxt);
 
+var datanum = 1285;
+ console.log("succeed")
 
-
-$.getJSON('/static/data.json',function(data){
-
+$.getJSON('/static/emoji_json.json',function(data){
    init();
+
    renderer.setSize( window.innerWidth, window.innerHeight );
    document.getElementById("container").appendChild( renderer.domElement );
    //scene.add( cube );
@@ -47,7 +48,6 @@ $.getJSON('/static/data.json',function(data){
 
 
    function init(){
-
 
    scene = new THREE.Scene();
    camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -105,17 +105,22 @@ $.getJSON('/static/data.json',function(data){
     let ybar=0;
     let zbar=0;
 
-    for (let i = 0; i < 1000; i++){
-      xbar+=data[i].x;
-      ybar+=data[i].y;
-      zbar+=data[i].z;
+    for (let i = 1; i <= datanum; i++){
+      xbar+=parseFloat(data[i].x);
+      ybar+=parseFloat(data[i].y);
+      zbar+=parseFloat(data[i].z);
+      console.log(data[i].x + " " + i+ " "+xbar);
     }
-    xbar/=1000; 
-    ybar/=1000;
-    zbar/=1000;
+  
+
+    xbar/=datanum; 
+    ybar/=datanum;
+    zbar/=datanum;
+
+    console.log(xbar+ " "+ ybar+" "+zbar); 
     
 
-    for (let i = 0; i < 1000 ; i++){
+    for (let i = 1; i <= datanum ; i++){
       // var object;
       // if (i == 193 || i == 180){
       //   object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0xff0030, opacity: 0.5, transparent: true} ) )
@@ -133,21 +138,24 @@ $.getJSON('/static/data.json',function(data){
 
       // object.position.set( position.x, position.y, position.z );
       
-
-
       // object.num = i;
       // scene.add(object);
 
       // try 2d image;
-      var map = new THREE.TextureLoader().load( "/static/Loudly-Crying-Emoji-PNG.png" );
+      if (data[i].order <=1028 && data[i].order>=1024) continue;
+      str = "/static/imgs/"+ data[i].order +".png"
+      var map = new THREE.TextureLoader().load( str );
       var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true } );
       var sprite = new THREE.Sprite( material );
 
       var position = new THREE.Vector3();
 
+
+
       position.x = (data[i].x-xbar)/2    //Math.random() * 10 - 5;
       position.y = (data[i].y-ybar)/2   //Math.random() * 6 - 3;
       position.z = (data[i].z-zbar)/2    //Math.random() * 8 - 4;
+
 
       sprite.scale.set(0.2,0.2,0.2)
       sprite.position.set(position.x, position.y, position.z);

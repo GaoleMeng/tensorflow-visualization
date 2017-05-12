@@ -1,7 +1,7 @@
 # Tensorflow-Visualization
 
-<<<<<<< HEAD
-The visulization of LargeVis and word2vec with a 3d model.
-=======
-The visulization of LargeVis and word2vec.
->>>>>>> ae6d09805c89e50950bc3634155bfe0cd9bd0a45
+The visualiztion of high dimentional data with largevis and Three.js in browser:
+
+http://52.72.105.25:5051/
+
+![alt text](https://raw.githubusercontent.com/gaoleMeng/tensorflow-visualization/img.png)

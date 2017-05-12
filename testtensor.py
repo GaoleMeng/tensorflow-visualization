@@ -1,5 +1,4 @@
-import tensorflow as tf;
-import calculation as ca;
+
 
 from flask import *
 import pandas as pd
@@ -9,10 +8,6 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return make_response(open('templates/tensorflow_test.html').read())
-
-
-
-
 
 # @app.route('/api/<int:id>')
 # def api(id):

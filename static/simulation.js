@@ -16,10 +16,17 @@ var theaxis;
 var curTxt=document.createElement('div');
 document.body.appendChild(curTxt);
 
+<<<<<<< HEAD
 var datanum = 1285;
  console.log("succeed")
 
 $.getJSON('/static/emoji_json.json',function(data){
+=======
+
+
+$.getJSON('/static/data.json',function(data){
+
+>>>>>>> ae6d09805c89e50950bc3634155bfe0cd9bd0a45
    init();
 
    renderer.setSize( window.innerWidth, window.innerHeight );
@@ -45,6 +52,10 @@ $.getJSON('/static/emoji_json.json',function(data){
    window.addEventListener('resize' , onWindowResize , false);
 
    console.log(document.getElementById("container").offsetWidth);
+<<<<<<< HEAD
+=======
+
+>>>>>>> ae6d09805c89e50950bc3634155bfe0cd9bd0a45
 
 
    function init(){
@@ -105,6 +116,7 @@ $.getJSON('/static/emoji_json.json',function(data){
     let ybar=0;
     let zbar=0;
 
+<<<<<<< HEAD
     for (let i = 1; i <= datanum; i++){
       xbar+=parseFloat(data[i].x);
       ybar+=parseFloat(data[i].y);
@@ -113,11 +125,32 @@ $.getJSON('/static/emoji_json.json',function(data){
       
     }
   
+=======
+    for (let i = 0; i < 1000; i++){
+      xbar+=data[i].x;
+      ybar+=data[i].y;
+      zbar+=data[i].z;
+    }
+    xbar/=1000; 
+    ybar/=1000;
+    zbar/=1000;
+    
+
+    for (let i = 0; i < 1000 ; i++){
+      // var object;
+      // if (i == 193 || i == 180){
+      //   object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0xff0030, opacity: 0.5, transparent: true} ) )
+      // }
+      // else{
+      //   object = new THREE.Mesh( sphereGeo,  new THREE.MeshBasicMaterial({ color: 0x0030ff, opacity: 0.5, transparent: true} ) )
+      // }
+>>>>>>> ae6d09805c89e50950bc3634155bfe0cd9bd0a45
 
     xbar/=datanum; 
     ybar/=datanum;
     zbar/=datanum;
 
+<<<<<<< HEAD
     console.log(xbar+ " "+ ybar+" "+zbar); 
     
 
@@ -139,20 +172,44 @@ $.getJSON('/static/emoji_json.json',function(data){
 
       // object.position.set( position.x, position.y, position.z );
       
+=======
+      // var position = new THREE.Vector3();
+
+      // position.x = (data[i].x-xbar)/2    //Math.random() * 10 - 5;
+      // position.y = (data[i].y-ybar)/2   //Math.random() * 6 - 3;
+      // position.z = (data[i].z-zbar)/2    //Math.random() * 8 - 4;
+
+      // object.position.set( position.x, position.y, position.z );
+      
+
+
+>>>>>>> ae6d09805c89e50950bc3634155bfe0cd9bd0a45
       // object.num = i;
       // scene.add(object);
 
       // try 2d image;
+<<<<<<< HEAD
       if (data[i].order <=1028 && data[i].order>=1024) continue;
       str = "/static/imgs/"+ data[i].order +".png"
       var map = new THREE.TextureLoader().load( str );
+=======
+      var map = new THREE.TextureLoader().load( "/static/Loudly-Crying-Emoji-PNG.png" );
+>>>>>>> ae6d09805c89e50950bc3634155bfe0cd9bd0a45
       var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true } );
       var sprite = new THREE.Sprite( material );
 
       var position = new THREE.Vector3();
 
+      position.x = (data[i].x-xbar)/2    //Math.random() * 10 - 5;
+      position.y = (data[i].y-ybar)/2   //Math.random() * 6 - 3;
+      position.z = (data[i].z-zbar)/2    //Math.random() * 8 - 4;
 
+      sprite.scale.set(0.2,0.2,0.2)
+      sprite.position.set(position.x, position.y, position.z);
 
+      sprite.num = i;
+
+<<<<<<< HEAD
       position.x = (data[i].x-xbar)/2    //Math.random() * 10 - 5;
       position.y = (data[i].y-ybar)/2   //Math.random() * 6 - 3;
       position.z = (data[i].z-zbar)/2    //Math.random() * 8 - 4;
@@ -163,6 +220,8 @@ $.getJSON('/static/emoji_json.json',function(data){
 
       sprite.num = i;
 
+=======
+>>>>>>> ae6d09805c89e50950bc3634155bfe0cd9bd0a45
       scene.add( sprite );
 
 

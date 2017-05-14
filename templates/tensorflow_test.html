@@ -31,29 +31,40 @@
 			    position:absolute;
 			}
 			#controlpanel{
-				z-index:100;
+				z-index: 99 ;
+				margin-left: 20px ;
+				position: absolute;
+				display: inline;
 			}
 			#container{
 				z-index: -1;
 			}
-
-
+			canvas {
+			    display: block; /* fix necessary to remove space at bottom of canvas */
+			}
 
 		</style>
 		<link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js"></script>
    		<script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
+   		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
 		</head>
 		<body>
-		
+		<div id="controlpanel">
+        <div class="mui-textfield">
+   			<input type="text" id="inp" placeholder="Input the emoji (text)" value ="">
+ 		 </div>
+ 		    <button type="submit" class="mui-btn mui-btn--raised" id="submitb">Submit</button>
+ 		    <button type="submit" class="mui-btn mui-btn--raised" id="back">Reset</button>
+      	</div>	
 		<div id="container"></div>
-		<!-- <div class="mui-panel" id="controlpanel">
-        	<h1>My Title</h1>
-        	<button class="mui-btn mui-btn--primary mui-btn--raised">My Button</button>
-      	</div>	 -->	
+
+			
       	<script src="/static/lib/three.js"></script>
 		<script src="/static/lib/TrackballControls.js"></script>
 		<script src="/static/lib/jquery-3.1.1.min.js"></script>
 		<script src="/static/lib/stats.min.js"></script>
 		<script src="/static/simulation.js"></script>
+
 	</body>
 </html>

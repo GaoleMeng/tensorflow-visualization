@@ -178,8 +178,27 @@ $.getJSON('/static/emoji_json_withname.json',function(data){
       
       objects.push(sprite);
       scene.add( sprite );
-      sprite.callback = function() { console.log( "loaded"); }
+
+
     }
+    // document.getElementById("container").addEventListener('click',function(){
+        
+    //   event.preventDefault();
+
+    //   mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+    //   mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+    //   raycaster.setFromCamera( mouse, camera );
+
+    //   var intersects = raycaster.intersectObjects( objects ); 
+
+    //   if ( intersects.length > 0 ) {
+
+          
+    //   }
+
+
+    // },false);
 
     //conbineMesh = new THREE.Mesh(conbineGeo, material);
 
@@ -307,6 +326,9 @@ $.getJSON('/static/emoji_json_withname.json',function(data){
     }
     mesh.userData.originalOpacities = opacities;
   }
+
+
+
 
     function fadeMesh(mesh, direction, options) {
         options = options || {};

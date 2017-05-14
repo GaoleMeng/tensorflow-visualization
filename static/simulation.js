@@ -13,7 +13,7 @@ var raycaster;
 var precolor;
 var theaxis;
 
-
+var whetherchange = false;
 
 var curTxt=document.createElement('div');
 document.body.appendChild(curTxt);
@@ -30,9 +30,9 @@ $.getJSON('/static/emoji_json_withname.json',function(data){
    //scene.add( sphere );
    //scene.add( conbineMesh );
    //combineMesh.setColor(0x00ddaa);
-   camera.position.z = 5;
-   camera.position.x = 5
-    camera.position.y = 5
+   camera.position.z = 7;
+   camera.position.x = 7
+    camera.position.y = 7
 
    renderer.setClearColor( 0xffffff );
   var stats = new Stats();
@@ -155,7 +155,8 @@ $.getJSON('/static/emoji_json_withname.json',function(data){
       var map = new THREE.TextureLoader().load( str , function(tex){
          // TweenMax.to(sprite.material, 1, { opacity: 1 });
          //var material = new THREE.SpriteMaterial( { map: tex, color: 0xffffff, fog: true } 
-
+        console.log("loaded")
+        TweenMax.to( objects[tex.id-2].material , 1, { opacity: 1 });
       });
       var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true } );
       var sprite = new THREE.Sprite( material );
@@ -174,9 +175,10 @@ $.getJSON('/static/emoji_json_withname.json',function(data){
 
       sprite.num = i;
       sprite.material.opacity = 0;
-      TweenMax.to(sprite.material, 1, { opacity: 1 });
+      
       objects.push(sprite);
       scene.add( sprite );
+      sprite.callback = function() { console.log( "loaded"); }
     }
 
     //conbineMesh = new THREE.Mesh(conbineGeo, material);
@@ -254,6 +256,7 @@ $.getJSON('/static/emoji_json_withname.json',function(data){
    }
    $("#submitb").click(function(){
 
+
      //console.log("get")
     // console.log($(":input").val)
       let i = 0;
@@ -268,9 +271,13 @@ $.getJSON('/static/emoji_json_withname.json',function(data){
         else{
           var tmp = i-1
           if (data[i].order >= 1029) tmp = tmp-5;
-          TweenMax.to(objects[tmp].material, 1, { opacity: 0.2 });
+          if (objects[tmp].material.opacity != 1 && whetherchange || !whetherchange)
+          TweenMax.to(objects[tmp].material, 1, { opacity: 0.1 });
         }
       }
+
+
+      whetherchange = true;
       console.log($(':input').val())
       $(':input').val("");
    })
@@ -279,15 +286,10 @@ $.getJSON('/static/emoji_json_withname.json',function(data){
      console.log("get")
     // console.log($(":input").val)
       let i = 0;
-      for (i = 1; i <= datanum; i++){
-        if (data[i].order <=1028 && data[i].order>=1024) continue;
-          if (i >= 1029) {
-            objects[i-6].material.color.set(0xffffff);
-          }
-          else{
-            objects[i-1].material.color.set(0xffffff);
-          }
-        }
+      for (i = 0; i < objects.length; i++){
+        TweenMax.to(objects[i].material, 1, { opacity: 1 });
+      }
+      whetherchange = false;
       $(':input').val("");
     })
 
